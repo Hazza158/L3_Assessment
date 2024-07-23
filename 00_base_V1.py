@@ -22,8 +22,6 @@ class ChooseRounds:
                                   "'START' button to begin the quiz." \
 
 
-
-        
         self.choose_instructions_label = Label(self.intro_frame,
                                                text=choose_instructions_txt,
                                                wraplength=300, justify="left")
