@@ -35,13 +35,13 @@ class ChooseRounds:
         # sublist is the background color, second item is
         # the number of rounds
         btn_color_value = [
-            ["#CC0000", 3], ["#009900", 5], ["#000099", 10]
+            ["#009900", 1]
             ]
 
-        for item in range(0, 3):
+        for item in range(0, 1):
             self.rounds_button = Button(self.how_many_frame,
                                         fg=button_fg, bg=btn_color_value[item][0],
-                                        text="{} Rounds".format(btn_color_value[item][1]),
+                                        text="START".format(btn_color_value[item][1]),
                                         font=button_font, width=10,
                                         command=lambda i=item: self.to_play(btn_color_value[i][1])
                                         )
@@ -91,6 +91,6 @@ class Play:
 # main routine
 if __name__ == "__main__":
     root = Tk()
-    root.title("Colour Quest")
+    root.title("Greek Gods Quiz")
     ChooseRounds()
     root.mainloop()
