@@ -29,11 +29,14 @@ class DisplayHelp:
                                         font=("Arial", "14", "bold"))
         self.help_heading_label.grid(row=0)
 
-        help_text = "This quiz is all about Greek Gods, in this quiz you will input" \
-                    "how many questions you would like to answer and then click the" \ 
+        help_text = "This quiz is all about Greek Gods, in this quiz you will input " \
+                    "how many questions you would like to answer and then click the" \
                     "'START' button to begin the quiz. This will open a new window" \
                     "that will present you with the first of your chosen amount" \
-                    "of questions, "
+                    "of questions, additionally there will be a start over button" \
+                    "in case you wish to restart before you have answered all of your" \
+                    "questions. Good Luck" \
+
         self.help_text_label = Label(self.help_frame, bg=background,
                                      text=help_text, wraplength=350,
                                      justify="left")
