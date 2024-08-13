@@ -84,6 +84,17 @@ class Play:
                                         command=self.close_play)
         self.start_over_button.grid(row=0, column=2)
 
+    # Detects which 'control' button was pressed and
+    # invokes necessary function.  Can possibly replace functions
+    # with calls to classes in this section!
+    def to_do(self, action):
+        if action == "get help":
+            self.get_help()
+        elif action == "get stats":
+            self.get_stats()
+        else:
+            self.close_play()
+
     def close_play(self):
         # Reshow root (i.e., choose rounds) and end current
         # game / allow new game to start
