@@ -41,7 +41,7 @@ current_question = 0
 score = 0
 
 # Load CSV data
-data = load_csv_data('gods.csv')
+data = load_csv_data('00_gods_data.csv')
 
 # Set up the GUI
 root = tk.Tk()
