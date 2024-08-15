@@ -1,82 +1,70 @@
-import tkinter as tk
+from tkinter import *
+from functools import partial  # To prevent unwanted windows
 import csv
+import random  # allows the questions to be randomized
 
-# Function to load the CSV data
-def load_csv_data(file_path):
-    data = []
-    with open(file_path, mode='r') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            data.append(row)
-    return data
+# holds all the GUI formatting, question randomising and correct answer check
+class QuizPlay:
+    def __init__(self):
+        self.quiz_box = Toplevel()
 
-# Function to display the next question
-def next_question():
-    global current_question, score
-    if current_question < len(data):
-        god_name.set(data[current_question]['God Name'])
-        correct_answer.set(data[current_question]['Correct Answer'])
-    else:
-        question_label.config(text="Quiz Complete!")
-        god_name.set("")
-        button1.config(state=tk.DISABLED)
-        button2.config(state=tk.DISABLED)
+        # If users press cross at top, closes help and
+        # 'releases' help button
+        self.quiz_box.protocol('WM_DELETE_WINDOW',
+                               partial(self.close_quiz))
 
-# Function to check the user's answer
-def check_answer(user_answer):
-    global current_question, score
-    if user_answer == correct_answer.get():
-        score += 1
-        score_label.config(text=f"Score: {score}")
-    current_question += 1
-    next_question()
+        # Create buttons
+        self.create_buttons()
 
-# Function to show help message
-def show_help():
-    help_message = "Click the correct button to identify whether the god is Greek or Roman."
-    tk.messagebox.showinfo("Help", help_message)
+    def create_buttons(self):
+        # Button 1
+        btn1 = Button(self.quiz_box, text="Start Quiz", command=self.start_quiz)
+        btn1.grid(row=0, column=0, padx=10, pady=10)
 
-# Initialize variables
-current_question = 0
-score = 0
+        # Button 2
+        btn2 = Button(self.quiz_box, text="Show Score", command=self.show_score)
+        btn2.grid(row=0, column=1, padx=10, pady=10)
 
-# Load CSV data
-data = load_csv_data('00_gods_data.csv')
+        # Button 3
+        btn3 = Button(self.quiz_box, text="Help", command=self.show_help)
+        btn3.grid(row=1, column=0, padx=10, pady=10)
 
-# Set up the GUI
-root = tk.Tk()
-root.title("Greek or Roman Gods Quiz")
+        # Button 4
+        btn4 = Button(self.quiz_box, text="Exit", command=self.close_quiz)
+        btn4.grid(row=1, column=1, padx=10, pady=10)
 
-# Title Label
-title_label = tk.Label(root, text="Greek or Roman Gods Quiz", font=("Helvetica", 16))
-title_label.grid(row=0, column=0, columnspan=2)
+    def start_quiz(self):
+        # Placeholder for starting the quiz
+        print("Quiz started")
 
-# Question Label
-question_label = tk.Label(root, text="Is this god Greek or Roman?", font=("Helvetica", 14))
-question_label.grid(row=1, column=0, columnspan=2)
+    def show_score(self):
+        # Placeholder for showing score
+        print("Score: [Your Score Here]")
 
-# God Name Label
-god_name = tk.StringVar()
-god_label = tk.Label(root, textvariable=god_name, font=("Helvetica", 14))
-god_label.grid(row=2, column=0, columnspan=2)
+    def show_help(self):
+        # Placeholder for showing help information
+        print("Help: [Help Information Here]")
 
-# Buttons
-correct_answer = tk.StringVar()
-button1 = tk.Button(root, text="Greek", command=lambda: check_answer("Greek"))
-button1.grid(row=3, column=0)
-button2 = tk.Button(root, text="Roman", command=lambda: check_answer("Roman"))
-button2.grid(row=3, column=1)
+    def get_all_gods(self):
+        file = open("00_gods_Data.csv", "r")
+        var_all_gods = list(csv.reader(file, delimiter=","))
+        file.close()
 
-# Score Label
-score_label = tk.Label(root, text=f"Score: {score}", font=("Helvetica", 14))
-score_label.grid(row=4, column=0, columnspan=2)
+        # removes first entry in list (ie: the header row).
+        var_all_gods.pop(0)
+        return var_all_gods
 
-# Help Button
-help_button = tk.Button(root, text="Help", command=show_help)
-help_button.grid(row=5, column=0, columnspan=2)
+    # *** DONT USE IN MAIN BASE (KILLS THE ROOT) ***
+    def close_quiz(self):
+        self.quiz_box.destroy()
 
-# Start the quiz
-next_question()
 
-# Run the GUI loop
-root.mainloop()
+# Main routine
+if __name__ == "__main__":
+    root = Tk()
+    root.title("Greek Gods Quiz")
+
+    # Create an instance of QuizPlay to show the quiz window
+    quiz = QuizPlay()
+
+    root.mainloop()

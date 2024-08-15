@@ -90,8 +90,6 @@ class Play:
     def to_do(self, action):
         if action == "get help":
             self.get_help()
-        elif action == "get stats":
-            self.get_stats()
         else:
             self.close_play()
 
