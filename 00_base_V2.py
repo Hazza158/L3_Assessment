@@ -84,6 +84,11 @@ class Play:
                                         command=self.close_play)
         self.start_over_button.grid(row=0, column=2)
 
+        control_buttons = [
+            ["#CC6600", "Help", "get help"],
+            ["#808080", "Start Over", "start over"]
+        ]
+
     # Detects which 'control' button was pressed and
     # invokes necessary function.  Can possibly replace functions
     # with calls to classes in this section!

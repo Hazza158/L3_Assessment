@@ -32,6 +32,7 @@ class QuizPLay:
                        "was correct or incorrect."
         self.instructions_label = Label(self.quiz_frame, text=instructions,
                                         wraplength=350, justify="left")
+        self.instructions_label.grid(row=1)
 
     # gets the Gods data from CSV file
     def get_all_gods(self):
@@ -45,7 +46,7 @@ class QuizPLay:
 
     # *** DONT USE IN MAIN BASE (KILLS THE ROOT) ***
     def close_quiz(self):
-        root.destroy()
+        self.quiz_box.destroy()  # close only the quiz window
 
 
 # Main routine
