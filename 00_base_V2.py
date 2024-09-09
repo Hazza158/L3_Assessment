@@ -81,7 +81,7 @@ class Play:
         self.control_frame.grid(row=6)
 
         self.start_over_button = Button(self.control_frame, text="Start Over",
-                                        command=self.close_play)
+                                        command=self.close_play, bg="#009900")
         self.start_over_button.grid(row=0, column=2)
 
         control_buttons = [

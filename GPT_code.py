@@ -1,52 +1,53 @@
-from tkinter import *
-from functools import partial  # To prevent unwanted windows
-import csv
-import random  # allows the questions to be randomized
+class ChooseRounds:
 
+    def __init__(self):
+        button_fg = "#FFFFFF"
+        button_font = ("Arial", "13", "bold")
 
-# holds all the GUI formatting, question randomising and correct answer check
-class QuizPLay:
-    def __init__(self, how_many):
-        self.quiz_box = Toplevel()
+        # Set up GUI Frame
+        self.intro_frame = Frame(padx=10, pady=10)
+        self.intro_frame.grid()
 
-        # If users press cross at top, closes help and
-        # 'releases' help button
-        self.quiz_box.protocol('WM_DELETE_WINDOW',
-                               partial(self.close_quiz))
+        # Heading and brief instructions
+        self.intro_heading_label = Label(self.intro_frame, text="Greek Gods Quiz",
+                                         font=("Arial", "16", "bold"))
+        self.intro_heading_label.grid(row=0)
 
-        # get all the gods to use in the quiz
-        self.all_gods = self.get_all_gods()
+        choose_instructions_txt = "In this quiz you will input the amount of " \
+                                  "questions you want to answer, then press the " \
+                                  "'START' button to begin the quiz."
 
-        self.quiz_frame = Frame(self.quiz_box, padx=10, pady=10)
-        self.quiz_frame.grid()
+        self.choose_instructions_label = Label(self.intro_frame,
+                                               text=choose_instructions_txt,
+                                               wraplength=300, justify="left")
+        self.choose_instructions_label.grid(row=1)
 
-        rounds_heading = "Choose - Round 1 of {}".format(how_many)
-        self.choose_heading = Label(self.quiz_frame, text=rounds_heading,
-                                    font=("Arial", "16", "bold")
-                                    )
-        self.choose_heading.grid(row=0)
+        self.rounds_entry = Entry(self.intro_frame)
+        self.rounds_entry.grid(row=2, column=0)
 
-        instructions = "Choose the answer that you think is correct from the selection below." \
-                       "After you choose your answer, the quiz will display if the answer you chose" \
-                       "was correct or incorrect."
-        self.instructions_label = Label(self.quiz_frame, text=instructions,
-                                        wraplength=350, justify="left")
-        self.instructions_label.grid(row=1)  # Add this line to display the label
+        # Start button to initiate the quiz
+        self.start_button = Button(self.intro_frame, text="START",
+                                   fg=button_fg, bg="#009900",
+                                   font=button_font,
+                                   command=self.start_quiz)
+        self.start_button.grid(row=3, columnspan=2, pady=10)
 
-    # gets the Gods data from CSV file
-    def get_all_gods(self):
-        with open("", "r") as file:
-            var_all_gods = list(csv.reader(file, delimiter=","))
-        # removes first entry in list (ie: the header row).
-        var_all_gods.pop(0)
-        return var_all_gods
+    def start_quiz(self):
+        try:
+            num_rounds = int(self.rounds_entry.get())
+            if num_rounds < 1 or num_rounds > 100:
+                raise ValueError
+        except ValueError:
+            # Show an error message if input is not valid
+            error_label = Label(self.intro_frame, text="Please enter a valid number of rounds (1-100).", fg="red")
+            error_label.grid(row=4, columnspan=2)
+            return
 
-    def close_quiz(self):
-        self.quiz_box.destroy()  # Properly close only the quiz window
+        # Start the quiz
+        self.to_play(num_rounds)
 
+    def to_play(self, num_rounds):
+        Play(num_rounds)
 
-# Main routine
-if __name__ == "__main__":
-    root = Tk()
-    root.title("Greek Gods Quiz")
-    root.mainloop()
+        # Hide root window (i.e., hide rounds choice window).
+        root.withdraw()
