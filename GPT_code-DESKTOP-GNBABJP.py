@@ -190,13 +190,13 @@ class Quiz:
         self.option_frame.grid(row=3)
 
         # Greek option button.
-        self.greek_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#E11E00",
+        self.greek_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#276FBF",
                                      text="Greek", font=("Arial", "12", "bold"),
                                      command=lambda: self.check_answer("Greek"))
         self.greek_button.grid(row=0, column=0, padx=5, pady=5)
 
         # Roman option button.
-        self.roman_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#E11E00",
+        self.roman_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#276FBF",
                                      text="Roman", font=("Arial", "12", "bold"),
                                      command=lambda: self.check_answer("Roman"))
         self.roman_button.grid(row=0, column=1)
@@ -230,7 +230,7 @@ class Quiz:
 
         # Button to go to the next round.
         self.next_button = Button(self.control_frame, text="NEXT",
-                                  fg="#FFFFFF", bg="#009900",
+                                  fg="#FFFFFF", bg="#DFBA89",
                                   font=("Arial", 11, "bold"),
                                   width=19, state=DISABLED,
                                   padx=3, pady=3,
@@ -251,7 +251,7 @@ class Quiz:
 
     # Method to load data from the CSV file.
     def get_all_data(self):
-        with open("00_gods_Data.csv", "r") as file:
+        with open("00_gods_data.csv", "r") as file:
             var_all_data = list(csv.reader(file, delimiter=","))
         # Remove the header row from the data.
         var_all_data.pop(0)
@@ -340,20 +340,17 @@ class DisplayHelp:
 
         self.help_heading_label = Label(self.help_frame,
                                         bg=background,
-                                        text="HELP / INFO",
+                                        text="HELP ME G",
                                         font=("Arial", "14", "bold"))
         self.help_heading_label.grid(row=0)
 
         # help text
-        help_text = "This is a simple quiz that involves you" \
-                    " answering questions about Greek and Roman" \
-                    " gods, to start this quiz select either" \
-                    " 5 or 10 questions or you can choose to input" \
-                    " a custom number of questions to answer with the 'custom'" \
-                    " button. After you have completed the quiz it will display your score. "
-
-
-
+        help_text = "Playing this quiz is quite simple." \
+                    "Your task is to try and answer as many questions as you can correctly, \n" \
+                    "and try to beat your previous scores. \n" \
+                    "When running the game, you'll be given three round \n" \
+                    "options - 5, 10 or a custom amount (1-100). \n" \
+                    "Choose your rounds to start the quiz."
 
         self.help_text_label = Label(self.help_frame, bg=background,
                                      text=help_text, wraplength=350,

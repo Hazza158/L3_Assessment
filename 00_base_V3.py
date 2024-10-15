@@ -28,7 +28,7 @@ class ChooseRounds:
         self.intro_heading_label.grid(row=0)
 
         introduction = "Welcome to my quiz about Greek gods! " \
-                       "To begin, click on 5, or 10 rounds, " \
+                       "Select 5, 10" \
                        "or if you want to do a custom amount, click on custom!"
         self.choose_instructions_label = Label(self.intro_frame,
                                                text=introduction,
@@ -44,10 +44,10 @@ class ChooseRounds:
         self.output_label.grid(row=3)
 
         btn_colour_value = [
-            ["#BE2727", 5], ["#276FBF", 10], ["#DFBA89", "Custom"]
+            ["#BE2727", 5], ["#276FBF", 10]
         ]
 
-        for item in range(0, 3):
+        for item in range(0, 2):
             self.rounds_button = Button(self.how_many_frame,
                                         fg=button_fg,
                                         bg=btn_colour_value[item][0],
@@ -129,7 +129,7 @@ class ChooseRounds:
         root.withdraw()
 
 
-# The Play class handles the main gameplay.
+# The Play class handles how the quiz runs.
 class Quiz:
     def __init__(self, how_many):
         background = "#F6ECDB"
@@ -290,15 +290,15 @@ class Quiz:
         # Update the score if the answer is correct.
         if user_answer.lower() == self.correct_answer.lower():
             self.user_score += 1
-            self.user_choice_label.config(text="Nicely done! \n"
-                                               f"You've chosen the correct answer! \n"
+            self.user_choice_label.config(text="Well done! \n"
+                                               f"That's the correct answer! \n"
                                                f"{self.god_name} is {self.correct_answer}.")
             self.round_results_label.config(
                 text=f"Round {self.rounds_played.get() + 1}: Current score: {self.user_score}")
 
         else:
-            self.user_choice_label.config(text="Uh oh! \n"
-                                               "That answer doesn't look right!"
+            self.user_choice_label.config(text="Oh no! \n"
+                                               "That answer is not correct!"
                                                f"{self.god_name} is {self.correct_answer}.")
             self.round_results_label.config(
                 text=f"Round {self.rounds_played.get() + 1}: Current score: {self.user_score}")
