@@ -23,13 +23,18 @@ class ChooseRounds:
         self.intro_frame.grid()
 
         # Heading and introduction
-        self.intro_heading_label = Label(self.intro_frame, text="Greek Gods",
+        self.intro_heading_label = Label(self.intro_frame, text="Greek and Roman Gods",
                                          font=("Arial", "16", "bold"))
         self.intro_heading_label.grid(row=0)
 
-        introduction = "Welcome to my quiz about Greek gods! " \
-                       "Select 5, 10" \
-                       "or if you want to do a custom amount, click on custom!"
+        introduction = "This is a quiz about Greek and Roman gods!, " \
+                       "to start click on either 5 or 10 rounds. " \
+                       "Additionally, you can select the 'custom' " \
+                       "rounds option. This will allow you to input " \
+                       "however many rounds you wish to answer " \
+                       "between 1-100. " \
+                       "Enjoy!"
+
         self.choose_instructions_label = Label(self.intro_frame,
                                                text=introduction,
                                                wraplength=300, justify="left")
@@ -39,15 +44,14 @@ class ChooseRounds:
         self.how_many_frame = Frame(self.intro_frame)
         self.how_many_frame.grid(row=2)
 
-        self.output_label = Label(self.intro_frame, text="",
-                                  fg="#9C0000")
+        self.output_label = Label(self.intro_frame, text="", fg="#9C0000")
         self.output_label.grid(row=3)
 
         btn_colour_value = [
-            ["#BE2727", 5], ["#276FBF", 10]
+            ["#BE2727", 5], ["#276FBF", 10], ["#389c03", "custom"]
         ]
 
-        for item in range(0, 2):
+        for item in range(0, 3):
             self.rounds_button = Button(self.how_many_frame,
                                         fg=button_fg,
                                         bg=btn_colour_value[item][0],
@@ -352,9 +356,6 @@ class DisplayHelp:
                     " a custom number of questions to answer with the 'custom'" \
                     " button. After you have completed the quiz it will display your score. "
 
-
-
-
         self.help_text_label = Label(self.help_frame, bg=background,
                                      text=help_text, wraplength=350,
                                      justify="left")
@@ -368,7 +369,6 @@ class DisplayHelp:
                                                      partner))
         self.dismiss_button.grid(row=2, padx=10, pady=10)
 
-
 # closes help dialogue (used by button and x at top of dialogue)
     def close_help(self, partner):
         # Put help button back to normal...
@@ -380,6 +380,6 @@ class DisplayHelp:
 # Main routine to start the program.
 if __name__ == "__main__":
     root = Tk()
-    root.title("Greek Gods Quiz")
+    root.title("Gods Quiz")
     ChooseRounds()
     root.mainloop()
