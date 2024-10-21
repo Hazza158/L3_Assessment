@@ -8,6 +8,7 @@ import random
 class ChooseRounds:
 
     def __init__(self):
+        start_background = "#d4d4d4"
         button_fg = "#FFFFFF"
         button_font = ("Arial", "13", "bold")
 
@@ -19,11 +20,11 @@ class ChooseRounds:
         self.var_has_error.set("no")
 
         # Set up GUI Frame
-        self.intro_frame = Frame(padx=10, pady=10)
+        self.intro_frame = Frame(padx=10, pady=10, bg=start_background)
         self.intro_frame.grid()
 
         # Heading and introduction
-        self.intro_heading_label = Label(self.intro_frame, text="Greek and Roman Gods",
+        self.intro_heading_label = Label(self.intro_frame, text="Greek and Roman Gods", bg=start_background,
                                          font=("Arial", "16", "bold"))
         self.intro_heading_label.grid(row=0)
 
@@ -37,7 +38,7 @@ class ChooseRounds:
 
         self.choose_instructions_label = Label(self.intro_frame,
                                                text=introduction,
-                                               wraplength=300, justify="left")
+                                               wraplength=300, justify="left", bg="#F6ECDB")
         self.choose_instructions_label.grid(row=1)
 
         # Rounds buttons...
@@ -53,7 +54,7 @@ class ChooseRounds:
 
         for item in range(0, 3):
             self.rounds_button = Button(self.how_many_frame,
-                                        fg=button_fg,
+                                        fg="#d4d4d4",
                                         bg=btn_colour_value[item][0],
                                         text="{}".format(btn_colour_value[item][1]),
                                         font=button_font, width=10,
@@ -195,15 +196,15 @@ class Quiz:
 
         # Greek option button.
         self.greek_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#DFBA89",
-                                     text="Greek", font=("Arial", "12", "bold"),
+                                     text="Greek", font=("Arial", "12", "bold"), justify="center",
                                      command=lambda: self.check_answer("Greek"))
-        self.greek_button.grid(row=0, column=0, padx=0, pady=0)
+        self.greek_button.grid(row=0, column=0, padx=5, pady=5)
 
         # Roman option button.
         self.roman_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#DFBA89",
-                                     text="Roman", font=("Arial", "12", "bold"),
+                                     text="Roman", font=("Arial", "12", "bold"), justify="center",
                                      command=lambda: self.check_answer("Roman"))
-        self.roman_button.grid(row=0, column=1)
+        self.roman_button.grid(row=1, column=0, padx=5, pady=5)
 
         # Label for displaying the god's name.
         self.god_label = Label(self.quiz_frame, text="god name goes here",
