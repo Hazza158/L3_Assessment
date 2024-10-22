@@ -201,10 +201,10 @@ class Quiz:
         self.choose_heading.grid(row=0)
 
         # Instructions for the quiz.
-        instructions = "Choose one of the two options provided. " \
-                       "You have a 50/50 chance of getting it right. " \
-                       "If you get stuck, you can click on 'Help' for " \
-                       "more information."
+        instructions = "Analise the question below and then answer with " \
+                       "what you think is the correct answer. " \
+                       "If you are looking for more info or get " \
+                       "stuck then select 'Help'. Good Luck."
         self.instructions_label = Label(self.quiz_frame, text=instructions,
                                         wraplength=350, justify="left",
                                         bg=background)
