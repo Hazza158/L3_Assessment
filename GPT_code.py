@@ -6,7 +6,6 @@ import random
 
 # Choose rounds class - beginning of programme
 class ChooseRounds:
-
     def __init__(self):
         button_fg = "#FFFFFF"
         button_font = ("Arial", "13", "bold")
@@ -23,19 +22,23 @@ class ChooseRounds:
         self.intro_frame.grid()
 
         # Heading and introduction
-        self.intro_heading_label = Label(self.intro_frame, text="Greek Gods",
+        self.intro_heading_label = Label(self.intro_frame, text="Greek and Roman Gods",
                                          font=("Arial", "16", "bold"))
         self.intro_heading_label.grid(row=0)
 
-        introduction = "Welcome to my quiz about Greek gods! " \
-                       "To begin, click on 5, or 10 rounds, " \
-                       "or if you want to do a custom amount, click on custom!"
+        introduction = "This is a quiz about Greek and Roman gods!, " \
+                       "to start click on either 5 or 10 rounds. " \
+                       "Additionally, you can select the 'custom' " \
+                       "rounds option. This will allow you to input " \
+                       "however many rounds you wish to answer " \
+                       "between 1-100. " \
+                       "Enjoy!"
         self.choose_instructions_label = Label(self.intro_frame,
                                                text=introduction,
                                                wraplength=300, justify="left")
         self.choose_instructions_label.grid(row=1)
 
-        # Rounds buttons...
+        # Setting up the "how many" frame
         self.how_many_frame = Frame(self.intro_frame)
         self.how_many_frame.grid(row=2)
 
@@ -60,7 +63,7 @@ class ChooseRounds:
                                     padx=5, pady=5)
 
         self.custom_button = Button(self.how_many_frame,
-                                    bg="#DFBA89",
+                                    bg="#f0cf29",
                                     fg=button_fg, text="Custom",
                                     font=button_font, width=10,
                                     command=lambda: self.custom_rounds()
@@ -70,10 +73,10 @@ class ChooseRounds:
 
     # Custom rounds - When "Custom" is clicked, should open a second window
     def custom_rounds(self):
-        self.custom_window = Toplevel(root)
-        self.custom_window.title("Enter Number of Rounds")
+        self.custom_window = Toplevel()
+        self.custom_window.title("Custom Rounds")
 
-        self.label = Label(self.custom_window, text="Enter a number (max 100):")
+        self.label = Label(self.custom_window, text="Enter a number between 1-100:")
         self.label.grid(row=0, padx=10, pady=10)
 
         self.entry = Entry(self.custom_window)
@@ -87,7 +90,7 @@ class ChooseRounds:
         self.output_label.grid(row=2, padx=10, pady=10)
 
         self.submit_button = Button(self.custom_window,
-                                    text="Submit",
+                                    text="Submit", bg="#009900",
                                     command=self.submit_custom_rounds)
         self.submit_button.grid(row=3, padx=10, pady=10)
 
@@ -107,6 +110,8 @@ class ChooseRounds:
             self.entry.insert(0, self.placeholder)
             self.entry.config(fg=self.placeholder_color)
 
+    # method to check the input for custom rounds
+    # if invalid, provide error message
     def submit_custom_rounds(self):
         has_error = "no"
 
@@ -115,21 +120,21 @@ class ChooseRounds:
             if 1 <= num_rounds <= 100:
                 self.to_quiz(num_rounds)
                 self.custom_window.destroy()
+                self.custom_button.config(state=NORMAL)
             else:
                 has_error = "yes"
-                self.var_feedback.set("ERROR: \n"
-                                      "Oops! It looks like you've entered a value\n"
-                                      "that is below the minimum or above the\n"
-                                      "maximum number of rounds.\n"
+                self.var_feedback.set("Oh No! \n"
+                                      "You have input a number \n"
+                                      "that isn't between 1-100 rounds! \n"
                                       "Please try again")
                 self.output_label.config(fg="#9C0000")
                 self.entry.config(bg="#F8CE00")
         except ValueError:
             has_error = "yes"
-            self.var_feedback.set("ERROR: \n"
-                                  "Oops! That isn't right!\n"
+            self.var_feedback.set("Oh No! \n"
+                                  "That doesnt look right! \n"
                                   "Please try again using\n"
-                                  "a whole number.")
+                                  "a whole number between 1-100.")
             self.output_label.config(fg="#9C0000")
             self.entry.config(bg="#F8CE00")
 
@@ -139,6 +144,7 @@ class ChooseRounds:
         else:
             self.var_has_error.set("no")
 
+    # To quiz function - start quiz when used
     def to_quiz(self, num_rounds):
         Quiz(num_rounds)
 
@@ -146,10 +152,19 @@ class ChooseRounds:
         root.withdraw()
 
 
+# Grab data from the CSV file
+def get_all_data():
+    with open("00_gods_Data.csv", "r") as file:
+        var_all_data = list(csv.reader(file, delimiter=","))
+    # Remove the header row from the data.
+    var_all_data.pop(0)
+    return var_all_data
+
+
 # The Play class handles the main gameplay.
 class Quiz:
     def __init__(self, how_many):
-        background = "#F6ECDB"
+        background = "#e8e6e6"
         # Initialize the user's score.
         self.user_score = 0
         # Create a new window for the quiz.
@@ -170,7 +185,7 @@ class Quiz:
         self.rounds_won.set(0)
 
         # Load all data from the CSV file
-        self.all_data = self.get_all_data()
+        self.all_data = get_all_data()
 
         # Create the quiz frame.
         self.quiz_frame = Frame(self.quiz_box, width=300,
@@ -188,93 +203,95 @@ class Quiz:
         # Instructions for the quiz.
         instructions = "Choose one of the two options provided. " \
                        "You have a 50/50 chance of getting it right. " \
-                       "When you're done, or if you get stuck, you can " \
-                       "click on 'Help'."
+                       "If you get stuck, you can click on 'Help' for " \
+                       "more information."
         self.instructions_label = Label(self.quiz_frame, text=instructions,
                                         wraplength=350, justify="left",
                                         bg=background)
         self.instructions_label.grid(row=1, padx=5, pady=5)
 
         # Label for the current question.
-        self.question_label = Label(self.quiz_frame, text="Is this god Greek or Roman?",
+        self.question_label = Label(self.quiz_frame, text="Is this God Greek or Roman?",
                                     wraplength=350, justify="center",
                                     font=("Helvetica", 16, "bold"), padx=5, pady=5,
                                     bg=background)
         self.question_label.grid(row=2)
 
-        # Create the option buttons in a new frame.
-        self.option_frame = Frame(self.quiz_frame)
-        self.option_frame.grid(row=3)
-
-        # Greek option button.
-        self.greek_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#276FBF",
-                                     text="Greek", font=("Arial", "12", "bold"),
-                                     command=lambda: self.check_answer("Greek"))
-        self.greek_button.grid(row=0, column=0, padx=5, pady=5)
-
-        # Roman option button.
-        self.roman_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#276FBF",
-                                     text="Roman", font=("Arial", "12", "bold"),
-                                     command=lambda: self.check_answer("Roman"))
-        self.roman_button.grid(row=0, column=1)
-
         # Label for displaying the god's name.
         self.god_label = Label(self.quiz_frame, text="god name goes here",
-                               bg="#F6ECDB", width=40, font=("Raleway", "12"))
-        self.god_label.grid(row=4, padx=5, pady=5)
+                               bg="#8f8f8f", width=19, fg="#FFFFFF", font=("Raleway", "12", "bold"))
+        self.god_label.grid(row=3, padx=5, pady=5)
 
-        # Label for displaying the user's choice and result.
+        # Create the option buttons in a new frame.
+        self.option_frame = Frame(self.quiz_frame)
+        self.option_frame.grid(row=4)
+
+        # Greek answer button.
+        self.greek_button = Button(self.option_frame, fg="#FFFFFF", width=18, bg="#3bb4ff",
+                                   text="Greek", font=("Arial", "12", "bold"),
+                                   command=lambda: self.check_answer("Greek"))
+        self.greek_button.grid(row=0, column=0, padx=5, pady=5)
+
+        # Roman answer button.
+        self.roman_button = Button(self.option_frame, fg="#FFFFFF", width=18, bg="#3bb4ff",
+                                   text="Roman", font=("Arial", "12", "bold"),
+                                   command=lambda: self.check_answer("Roman"))
+        self.roman_button.grid(row=1, column=0, padx=5, pady=5)
+
+        # displays usrs choice and result
         self.user_choice_label = Label(self.quiz_frame,
-                                       text="When you choose an option,"
-                                            "your choice will appear here!",
-                                       bg="#DFBA89", width=52,)
+                                       text="Your answer will show up here!",
+                                       bg="#8f8f8f", width=23, fg="#FFFFFF",
+                                       justify="left")
         self.user_choice_label.grid(row=5, padx=5, pady=5)
 
         # Frame for round results and navigation.
         self.rounds_frame = Frame(self.quiz_frame)
         self.rounds_frame.grid(row=6, padx=5, pady=5)
 
-        # Label for displaying the current round result.
+        # current rounds result label
         self.round_results_label = Label(self.rounds_frame, text="Your score and round info will appear here",
                                          width=44,
                                          font=("Arial", 10),
                                          bg=background)
         self.round_results_label.grid(row=0, column=0)
 
-        # Control frame for navigation buttons.
+        # Control frame for nav buttons.
         self.control_frame = Frame(self.quiz_frame)
         self.control_frame.grid(row=7)
 
-        # Button to go to the next round.
-        self.next_button = Button(self.control_frame, text="NEXT",
-                                  fg="#FFFFFF", bg="#DFBA89",
+        self.start_over_button = Button(self.control_frame, text="Start Over",
+                                        fg="#FFFFFF", bg="#3bb4ff",
+                                        font=("Arial", 11, "bold"),
+                                        width=12,
+                                        padx=3, pady=3, justify= "center",
+                                        command=self.close_quiz)
+        self.start_over_button.grid(row=0, column=1)
+
+        # help button
+        self.help_button = Button(self.control_frame, text="HELP",
+                                  fg="#FFFFFF", bg="#cc6eb0",
                                   font=("Arial", 11, "bold"),
-                                  width=19, state=DISABLED,
+                                  width=12,
+                                  padx=3, pady=3,
+                                  command=self.get_help)
+        self.help_button.grid(row=0, column=0)
+
+        # next round button
+        self.next_button = Button(self.control_frame, text="NEXT",
+                                  fg="#FFFFFF", bg="#009900",
+                                  font=("Arial", 11, "bold"),
+                                  width=12, state=DISABLED,
                                   padx=3, pady=3,
                                   command=self.new_round)
         self.next_button.grid(row=0, column=2)
-
-        # Button for help.
-        self.help_button = Button(self.control_frame, text="HELP",
-                                  fg="#FFFFFF", bg="#276FBF",
-                                  font=("Arial", 11, "bold"),
-                                  width=19,
-                                  padx=3, pady=3,
-                                  command=self.get_help)
-        self.help_button.grid(row=0, column=1)
 
         # Start the first round.
         self.new_round()
 
     # Method to load data from the CSV file.
-    def get_all_data(self):
-        with open("00_quiz_info.csv", "r") as file:
-            var_all_data = list(csv.reader(file, delimiter=","))
-        # Remove the header row from the data.
-        var_all_data.pop(0)
-        return var_all_data
 
-    # Method to start a new round.
+    # new round start
     def new_round(self):
         # Disable the next button at the start of each round.
         self.next_button.config(state=DISABLED)
@@ -283,7 +300,7 @@ class Quiz:
 
         # Check if the quiz is complete.
         if self.rounds_played.get() >= self.rounds_wanted.get():
-            self.question_label.config(text="Quiz Complete!")
+            self.question_label.config(text="Quiz Finished! Well Done!")
             self.greek_button.config(state=DISABLED)
             self.roman_button.config(state=DISABLED)
             self.user_choice_label.config(text=f"Your Score: {self.user_score} out of {self.rounds_wanted.get()}")
@@ -298,7 +315,7 @@ class Quiz:
         self.god_name = current_question[2]
         self.correct_answer = current_question[0]
 
-        # Update the UI with the new question.
+        # Update the UI wih the new question.
         self.god_label.config(text=self.god_name)
         self.choose_heading.config(text=f"Round {self.rounds_played.get() + 1} of {self.rounds_wanted.get()}")
 
@@ -307,16 +324,16 @@ class Quiz:
         # Update the score if the answer is correct.
         if user_answer.lower() == self.correct_answer.lower():
             self.user_score += 1
-            self.user_choice_label.config(text="Nicely done! \n"
-                                               f"You've chosen the correct answer! \n"
-                                               f"{self.god_name} is {self.correct_answer}.")
+            self.user_choice_label.config(text="Well done! That's the correct answer! \n"
+                                               f"{self.god_name} is {self.correct_answer}.",
+                                          bg="#7bdb70", width=28, fg="#000000")
             self.round_results_label.config(
                 text=f"Round {self.rounds_played.get() + 1}: Current score: {self.user_score}")
 
         else:
-            self.user_choice_label.config(text="Uh oh! \n"
-                                               "That answer doesn't look right!"
-                                               f"{self.god_name} is {self.correct_answer}.")
+            self.user_choice_label.config(text="Oh no! That answer is incorrect! \n"
+                                               f"{self.god_name} is {self.correct_answer}.",
+                                          bg="#db7070", width=28, fg="#000000")
             self.round_results_label.config(
                 text=f"Round {self.rounds_played.get() + 1}: Current score: {self.user_score}")
 
@@ -332,7 +349,10 @@ class Quiz:
 
     # Method to close the quiz window.
     def close_quiz(self):
-        root.destroy()
+        # reshow root (ie: choose rounds) and end current
+        # game / allow new game to start
+        root.deiconify()
+        self.quiz_box.destroy()
 
 
 # Help class - this is where the help information is located and displayed
@@ -357,17 +377,12 @@ class DisplayHelp:
 
         self.help_heading_label = Label(self.help_frame,
                                         bg=background,
-                                        text="HELP ME G",
+                                        text="HELP / INFO",
                                         font=("Arial", "14", "bold"))
         self.help_heading_label.grid(row=0)
 
         # help text
-        help_text = "Playing this quiz is quite simple." \
-                    "Your task is to try and answer as many questions as you can correctly, \n" \
-                    "and try to beat your previous scores. \n" \
-                    "When running the game, you'll be given three round \n" \
-                    "options - 5, 10 or a custom amount (1-100). \n" \
-                    "Choose your rounds to start the quiz."
+        help_text = ""
 
         self.help_text_label = Label(self.help_frame, bg=background,
                                      text=help_text, wraplength=350,
@@ -376,14 +391,13 @@ class DisplayHelp:
 
         self.dismiss_button = Button(self.help_frame,
                                      font=("Arial", "12", "bold"),
-                                     text="Dismiss", bg="#276FBF",
+                                     text="Dismiss", bg="#cc6eb0",
                                      fg="#FFFFFF",
                                      command=partial(self.close_help,
                                                      partner))
         self.dismiss_button.grid(row=2, padx=10, pady=10)
 
-
-# closes help dialogue (used by button and x at top of dialogue)
+    # closes help dialogue (used by button and x at top of dialogue)
     def close_help(self, partner):
         # Put help button back to normal...
 
@@ -394,6 +408,6 @@ class DisplayHelp:
 # Main routine to start the program.
 if __name__ == "__main__":
     root = Tk()
-    root.title("Gods Quiz")
+    root.title("Greek Gods Quiz")
     ChooseRounds()
     root.mainloop()
