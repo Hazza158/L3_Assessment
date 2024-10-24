@@ -13,14 +13,13 @@ class ChooseRounds:
         self.intro_frame.grid()
 
         # heading and brief instructions
-        self.intro_heading_label = Label(self.intro_frame, text="Greek Gods Quiz",
+        self.intro_heading_label = Label(self.intro_frame, text="Greek and Roman Gods",
                                          font=("Arial", "16", "bold"))
         self.intro_heading_label.grid(row=0)
 
-        choose_instructions_txt = "In this quiz you will input the amount of " \
-                                  "questions you want to answer, then press the " \
-                                  "'START' button to begin the quiz." \
-
+        choose_instructions_txt = "This is a quiz about Greek and Roman Gods, " \
+                                  "first input however many rounds you want to " \
+                                  "answer then select 'Start' to begin the quiz."
 
         self.choose_instructions_label = Label(self.intro_frame,
                                                text=choose_instructions_txt,

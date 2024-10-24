@@ -7,6 +7,7 @@ import random
 # Choose rounds class - beginning of programme
 class ChooseRounds:
     def __init__(self):
+        self.custom_window = None
         button_fg = "#FFFFFF"
         button_font = ("Arial", "13", "bold")
 
@@ -260,7 +261,7 @@ class Quiz:
         self.control_frame = Frame(self.quiz_frame)
         self.control_frame.grid(row=7)
 
-        self.start_over_button = Button(self.control_frame, text="Start Over",
+        self.start_over_button = Button(self.control_frame, text="START OVER",
                                         fg="#FFFFFF", bg="#3bb4ff",
                                         font=("Arial", 11, "bold"),
                                         width=12,
@@ -359,7 +360,7 @@ class Quiz:
 class DisplayHelp:
     def __init__(self, partner):
         # setup dialogue box and background colour
-        background = "#F6ECDB"
+        background = "#bee3fa"
         self.help_box = Toplevel()
 
         # disable help button
@@ -382,7 +383,13 @@ class DisplayHelp:
         self.help_heading_label.grid(row=0)
 
         # help text
-        help_text = ""
+        help_text = "In this quiz you will be tasked with answering " \
+                    "if the given god is a Greek or a Roman God, " \
+                    "the program will keep a running score as you " \
+                    "answer the questions which you will be able to " \
+                    "see just below the buttons that are used to answer. " \
+                    "When you answer a question the program will turn a light green " \
+                    "for a correct answer, and a light red if the answer was incorrect."
 
         self.help_text_label = Label(self.help_frame, bg=background,
                                      text=help_text, wraplength=350,
@@ -391,7 +398,7 @@ class DisplayHelp:
 
         self.dismiss_button = Button(self.help_frame,
                                      font=("Arial", "12", "bold"),
-                                     text="Dismiss", bg="#cc6eb0",
+                                     text="DISMISS", bg="#cc6eb0",
                                      fg="#FFFFFF",
                                      command=partial(self.close_help,
                                                      partner))
@@ -405,9 +412,9 @@ class DisplayHelp:
         self.help_box.destroy()
 
 
-# Main routine to start the program.
+# Main routine
 if __name__ == "__main__":
     root = Tk()
-    root.title("Greek Gods Quiz")
+    root.title("Gods Quiz")
     ChooseRounds()
     root.mainloop()
