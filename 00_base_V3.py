@@ -174,7 +174,7 @@ class Quiz:
         self.instructions_label.grid(row=1, padx=5, pady=5)
 
         # Label for the current question.
-        self.question_label = Label(self.quiz_frame, text="Is this god Greek or Roman?",
+        self.question_label = Label(self.quiz_frame, text="Greek or Roman?",
                                     wraplength=350, justify="center",
                                     font=("Helvetica", 16, "bold"), padx=5, pady=5,
                                     bg=background)
@@ -185,27 +185,26 @@ class Quiz:
         self.option_frame.grid(row=3)
 
         # Greek option button.
-        self.greek_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#E11E00",
+        self.greek_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#dce3de",
                                      text="Greek", font=("Arial", "12", "bold"),
                                      command=lambda: self.check_answer("Greek"))
         self.greek_button.grid(row=0, column=0, padx=5, pady=5)
 
         # Roman option button.
-        self.roman_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#E11E00",
+        self.roman_button = Button(self.option_frame, fg="#FFFFFF", width=17, bg="#dce3de",
                                      text="Roman", font=("Arial", "12", "bold"),
                                      command=lambda: self.check_answer("Roman"))
         self.roman_button.grid(row=0, column=1)
 
         # Label for displaying the god's name.
         self.god_label = Label(self.quiz_frame, text="god name goes here",
-                               bg="#F6ECDB", width=40, font=("Raleway", "12"))
+                               bg="#FFFFFF", width=40, font=("Raleway", "12"))
         self.god_label.grid(row=4, padx=5, pady=5)
 
         # Label for displaying the user's choice and result.
         self.user_choice_label = Label(self.quiz_frame,
-                                       text="When you choose an option,"
-                                            "your choice will appear here!",
-                                       bg="#DFBA89", width=52,)
+                                       text="your choice will appear here",
+                                       bg="#FFFFFF", width=52,)
         self.user_choice_label.grid(row=5, padx=5, pady=5)
 
         # Frame for round results and navigation.
@@ -213,7 +212,7 @@ class Quiz:
         self.rounds_frame.grid(row=6, padx=5, pady=5)
 
         # Label for displaying the current round result.
-        self.round_results_label = Label(self.rounds_frame, text="Your score and round info will appear here",
+        self.round_results_label = Label(self.rounds_frame, text="round info will appear here",
                                          width=44,
                                          font=("Arial", 10),
                                          bg=background)
@@ -225,7 +224,7 @@ class Quiz:
 
         # Button to go to the next round.
         self.next_button = Button(self.control_frame, text="NEXT",
-                                  fg="#FFFFFF", bg="#009900",
+                                  fg="#FFFFFF", bg="#dce3de",
                                   font=("Arial", 11, "bold"),
                                   width=19, state=DISABLED,
                                   padx=3, pady=3,
@@ -234,7 +233,7 @@ class Quiz:
 
         # Button for help.
         self.help_button = Button(self.control_frame, text="HELP",
-                                  fg="#FFFFFF", bg="#276FBF",
+                                  fg="#FFFFFF", bg="#dce3de",
                                   font=("Arial", 11, "bold"),
                                   width=19,
                                   padx=3, pady=3,
@@ -317,7 +316,7 @@ class Quiz:
 class DisplayHelp:
     def __init__(self, partner):
         # setup dialogue box and background colour
-        background = "#F6ECDB"
+        background = "#FFFFFF"
         self.help_box = Toplevel()
 
         # disable help button
