@@ -15,15 +15,13 @@ class ChooseRounds:
         self.intro_frame.grid()
 
         # Heading and brief instructions
-        self.intro_heading_label = Label(self.intro_frame, text="Greek and Roman Gods",
+        self.intro_heading_label = Label(self.intro_frame, text="Greek Gods Quiz",
                                          font=("Arial", "16", "bold"))
         self.intro_heading_label.grid(row=0)
 
-        choose_instructions_txt = "This is a quiz about Greek and Roman Gods,you will " \
-                                  "first input however many rounds you want to " \
-                                  "answer then select 'Start' to begin the quiz. " \
-                                  "You will then have to answer if the given God " \
-                                  "is a Greek or a Roman God. Good Luck!"
+        choose_instructions_txt = "In this quiz you will input the amount of " \
+                                  "questions you want to answer, then press the " \
+                                  "'START' button to begin the quiz."
 
         self.choose_instructions_label = Label(self.intro_frame,
                                                text=choose_instructions_txt,
@@ -164,6 +162,6 @@ class DisplayHelp:
 # Main routine
 if __name__ == "__main__":
     root = Tk()
-    root.title("Gods Quiz")
+    root.title("Greek Gods Quiz")
     ChooseRounds()
     root.mainloop()

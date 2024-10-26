@@ -48,8 +48,8 @@ class ChooseRounds:
         self.output_label.grid(row=3)
 
         btn_colour_value = [
-            ["#cc6eb0", 5],
-            ["#3bb4ff", 10]
+            ["#dce3de", 5],
+            ["#dce3de", 10]
         ]
 
         for item in range(0, 2):
@@ -64,7 +64,7 @@ class ChooseRounds:
                                     padx=5, pady=5)
 
         self.custom_button = Button(self.how_many_frame,
-                                    bg="#f0cf29",
+                                    bg="#dce3de",
                                     fg=button_fg, text="Custom",
                                     font=button_font, width=10,
                                     command=lambda: self.custom_rounds()
@@ -124,7 +124,7 @@ class ChooseRounds:
                 self.custom_button.config(state=NORMAL)
             else:
                 has_error = "yes"
-                self.var_feedback.set("Uh Oh! \n"
+                self.var_feedback.set("Oh No! \n"
                                       "You have input a number \n"
                                       "that isn't between 1-100 rounds! \n"
                                       "Please try again")
@@ -132,8 +132,8 @@ class ChooseRounds:
                 self.entry.config(bg="#F8CE00")
         except ValueError:
             has_error = "yes"
-            self.var_feedback.set("Uh Oh! \n"
-                                  "That's not right! \n"
+            self.var_feedback.set("Oh No! \n"
+                                  "That doesnt look right! \n"
                                   "Please try again using\n"
                                   "a whole number between 1-100.")
             self.output_label.config(fg="#9C0000")
@@ -165,7 +165,7 @@ def get_all_data():
 # The Play class handles the main gameplay.
 class Quiz:
     def __init__(self, how_many):
-        background = "#e8e6e6"
+        background = "#FFFFFF"
         # Initialize the user's score.
         self.user_score = 0
         # Create a new window for the quiz.
@@ -228,13 +228,13 @@ class Quiz:
         self.option_frame.grid(row=4)
 
         # Greek answer button.
-        self.greek_button = Button(self.option_frame, fg="#FFFFFF", width=18, bg="#3bb4ff",
+        self.greek_button = Button(self.option_frame, fg="#FFFFFF", width=18, bg="#dce3de",
                                    text="Greek", font=("Arial", "12", "bold"),
                                    command=lambda: self.check_answer("Greek"))
         self.greek_button.grid(row=0, column=0, padx=5, pady=5)
 
         # Roman answer button.
-        self.roman_button = Button(self.option_frame, fg="#FFFFFF", width=18, bg="#3bb4ff",
+        self.roman_button = Button(self.option_frame, fg="#FFFFFF", width=18, bg="#dce3de",
                                    text="Roman", font=("Arial", "12", "bold"),
                                    command=lambda: self.check_answer("Roman"))
         self.roman_button.grid(row=1, column=0, padx=5, pady=5)
@@ -251,7 +251,7 @@ class Quiz:
         self.rounds_frame.grid(row=6, padx=5, pady=5)
 
         # current rounds result label
-        self.round_results_label = Label(self.rounds_frame, text="score and round info will be here",
+        self.round_results_label = Label(self.rounds_frame, text="Your score and round info will appear here",
                                          width=44,
                                          font=("Arial", 10),
                                          bg=background)
@@ -261,17 +261,17 @@ class Quiz:
         self.control_frame = Frame(self.quiz_frame)
         self.control_frame.grid(row=7)
 
-        self.start_over_button = Button(self.control_frame, text="START OVER",
-                                        fg="#FFFFFF", bg="#3bb4ff",
-                                        font=("Arial", 11, "bold"),
-                                        width=12,
-                                        padx=3, pady=3, justify= "center",
-                                        command=self.close_quiz)
-        self.start_over_button.grid(row=0, column=1)
+        # self.start_over_button = Button(self.control_frame, text="START OVER",
+                                        # fg="#FFFFFF", bg="#3bb4ff",
+                                        # font=("Arial", 11, "bold"),
+                                        # width=12,
+                                        # padx=3, pady=3, justify= "center",
+                                        # command=self.close_quiz
+        # self.start_over_button.grid(row=0, column=1)
 
         # help button
         self.help_button = Button(self.control_frame, text="HELP",
-                                  fg="#FFFFFF", bg="#cc6eb0",
+                                  fg="#FFFFFF", bg="#dce3de",
                                   font=("Arial", 11, "bold"),
                                   width=12,
                                   padx=3, pady=3,
@@ -280,7 +280,7 @@ class Quiz:
 
         # next round button
         self.next_button = Button(self.control_frame, text="NEXT",
-                                  fg="#FFFFFF", bg="#009900",
+                                  fg="#FFFFFF", bg="#dce3de",
                                   font=("Arial", 11, "bold"),
                                   width=12, state=DISABLED,
                                   padx=3, pady=3,
@@ -327,14 +327,14 @@ class Quiz:
             self.user_score += 1
             self.user_choice_label.config(text="Well done! That's the correct answer! \n"
                                                f"{self.god_name} is {self.correct_answer}.",
-                                          bg="#7bdb70", width=28, fg="#000000")
+                                          bg="#dce3de", width=28, fg="#000000")
             self.round_results_label.config(
                 text=f"Round {self.rounds_played.get() + 1}: Current score: {self.user_score}")
 
         else:
             self.user_choice_label.config(text="Oh no! That answer is incorrect! \n"
                                                f"{self.god_name} is {self.correct_answer}.",
-                                          bg="#db7070", width=28, fg="#000000")
+                                          bg="#dce3de", width=28, fg="#000000")
             self.round_results_label.config(
                 text=f"Round {self.rounds_played.get() + 1}: Current score: {self.user_score}")
 
@@ -360,7 +360,7 @@ class Quiz:
 class DisplayHelp:
     def __init__(self, partner):
         # setup dialogue box and background colour
-        background = "#bee3fa"
+        background = "#FFFFFF"
         self.help_box = Toplevel()
 
         # disable help button
@@ -383,13 +383,7 @@ class DisplayHelp:
         self.help_heading_label.grid(row=0)
 
         # help text
-        help_text = "In this quiz you will be tasked with answering " \
-                    "if the given god is a Greek or a Roman God, " \
-                    "the program will keep a running score as you " \
-                    "answer the questions which you will be able to " \
-                    "see just below the buttons that are used to answer. " \
-                    "When you answer a question the program will turn a light green " \
-                    "for a correct answer, and a light red if the answer was incorrect."
+        help_text = ""
 
         self.help_text_label = Label(self.help_frame, bg=background,
                                      text=help_text, wraplength=350,
@@ -398,7 +392,7 @@ class DisplayHelp:
 
         self.dismiss_button = Button(self.help_frame,
                                      font=("Arial", "12", "bold"),
-                                     text="DISMISS", bg="#cc6eb0",
+                                     text="DISMISS", bg="#dce3de",
                                      fg="#FFFFFF",
                                      command=partial(self.close_help,
                                                      partner))
